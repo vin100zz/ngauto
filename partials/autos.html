@@ -1,0 +1,44 @@
+<meta charset="utf-8">
+
+<div id="header">
+	<span>Toutes les Marques</span>
+</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+  
+    <div class="span2">
+    
+			<div id="search">
+				<a href="#/saisie/add/marque" class="add">Ajouter une marque</a>
+				<div class="search">
+					 Rechercher : <input ng-model="query.nomMarque">
+				</div>
+	    	<div class="sort">
+		      Trier par :
+		      <a href="" ng-click="predicate = 'nomMarque'; reverse=doReverseAlpha()">A-Z</a> |
+		      <a href="" ng-click="predicate = '[pays,nomMarque]'; reverse=doReversePays();">Pays</a>
+	      </div>
+      </div>
+      
+    </div>
+    
+    
+    <div class="span10">
+
+      <ul id="marques">
+        <li ng-repeat="marque in marques | filter:query | orderBy:predicate:reverse">
+          <a href="#/marque/{{marque.idMarque}}">
+          	<div class="logo">
+          		<img ng-src="img/logo/{{marque.idMarque}}.png"/>
+          	</div>
+		        <span>{{marque.nomMarque}}</span> 
+		        <img ng-src="img/pays/{{marque.pays}}.png" class="pays"/>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+    
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<meta charset="utf-8">
+
+<div id="header">
+ <img ng-src="img/logo/{{marque.idMarque}}.png" id="logo" />
+ <span>{{marque.nomMarque}}</span>
+ <img ng-src="img/pays/{{marque.pays}}.png" id="pays" />
+</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+  
+    <div class="span2">
+    
+			<div id="menu">
+			
+				<a ng-href="#/saisie/edit/marque?id={{marque.idMarque}}" class="edit">Éditer la marque</a>
+				<a ng-href="#/saisie/add/modele?id={{marque.idMarque}}" class="add">Ajouter un modèle</a>
+				<a ng-href="#/saisie/add/docMarque?id={{marque.idMarque}}" class="add">Ajouter un document</a>
+				
+				<!--<div id="filterCategorie" class="search">
+					 Filtrer par catégorie :<select ng-model="queryCategorie.categorie" ng-options="item.categorie as item.categorie | categorieType for item in marque.categories"></select>
+				</div>-->
+				
+				<div id="filterCategorie" class="search">
+					Filtrer par catégorie :<select ng-model="queryCategorie.categorie">
+						<option value="">Toutes les catégories</option>
+						<option ng-repeat="item in marque.categories" value="{{item.categorie}}">{{item.categorie | categorieType}}</option>
+					</select> 
+				</div>
+			
+				<div id="filterModele" class="search">
+					 Rechercher un modèle {{marque.nomMarque}} :<input ng-model="queryModele.nomModele">
+				</div>
+				
+				<hr/>
+				
+				<div id="filterMarque" class="search">
+					 Rechercher une marque :<input ng-model="queryMarque.nomMarque">
+				</div>
+
+	      <ul>
+	        <li ng-repeat="other in marque.others | filter:queryMarque" ng-class="{true:'selected', false:''}[other.idMarque == marque.idMarque]">
+	       		<a href="#/marque/{{other.idMarque}}">{{other.nomMarque}}</a>
+	        </li>
+	      </ul>
+	      
+      </div>
+			
+	  </div>
+	  
+	  <div class="span10">
+	  
+	  	<div id="toggle">
+	  		<div ng-class="{true:'selected', false:'notSelected'}[toggle]" ng-click="toggle=!toggle" ng-init="toggle=false">Modèles</div>
+	  		<div ng-class="{true:'notSelected', false:'selected'}[toggle]" ng-click="toggle=!toggle">Histoire</div>
+	  	</div>
+	
+	    <ul id="modeles" ng-class="{true:'hidden', false:''}[toggle]">
+	      <li ng-repeat="modele in marque.modeles | filter:queryModele | filter:queryCategorie" class="thumbnail">
+	      	   
+	      	<div class="nom">
+	      		{{modele.nomModele}}
+	      		<a ng-href="#/saisie/edit/modele?id={{modele.idModele}}" class="edit">Éditer le modèle</a>
+	      		<a ng-href="#/saisie/add/version?id={{modele.idModele}}" class="add">Ajouter une version</a>
+	      	</div> 
+	      		      		        
+	        <div class="carac">
+		        <p>{{modele.categorie | categorieType}}<p/>
+		        
+		        <p ng-show="modele.debut != ''"><span class='key'>Date :</span>
+		        {{modele.debut}}<span ng-show="modele.fin != ''"> - </span>{{modele.fin}}</p>
+		        
+		        <p ng-show="modele.cylindree_min != ''"><span class='key'>Cylindrée :</span>
+		        {{modele.cylindree_min}}<span ng-show="modele.cylindree_max != ''"> - </span>{{modele.cylindree_max}}</p>
+		        
+		        <p ng-show="modele.puissance_min != ''"><span class='key'>Puissance :</span>
+		        {{modele.puissance_min}}<span ng-show="modele.puissance_max != ''"> - </span>{{modele.puissance_max}}</p>
+		        
+		        <p ng-show="modele.production != ''"><span class='key'>Production :</span> {{modele.production}}</p>
+		        
+		        <p ng-show="modele.commentaire != ''"><span class='key'>Note :</span> {{modele.commentaire}}</p>
+	        </div>  
+	      	      
+	      	<div class="versions">
+		        <ul>
+		        	<li ng-repeat="version in modele.versions">
+		        		<a href="#/version/{{version.idVersion}}/0">
+		        			<img ng-src="{{version.img}}" />
+		        			<div class="comment">
+		        				<span>{{version.anneeModele}} - {{version.type | categorieType}}</span>
+		        				<span class="name">{{version.nom}}</span>
+									</div>
+		        		</a>
+		        	</li>        
+		        </ul>
+		      </div>
+	        
+	      </li>
+	    </ul>
+	    
+	    <div id="histo" ng-class="{true:'', false:'hidden'}[toggle]">
+	    	<div ng-bind-html-unsafe="histo" ng-show="histo != null"></div>
+	    	
+	    	<div ng-repeat="doc in marque.docs">
+	    	
+	    		<p ng-show="doc.legende != ''">{{doc.legende}}</p>
+		    	<a href="img/marque/{{doc.idDocumentMarque}}.jpg" target="_blank"><img src="img/marque/{{doc.idDocumentMarque}}.jpg"/></a>
+					<legend>{{doc.source}}<span ng-show="doc.source != ''"> - </span>{{doc.date}}</legend>
+				<hr/>
+				
+	    	</div>
+	    	
+	    </div>
+	
+	  </div>
+  </div>
+</div>

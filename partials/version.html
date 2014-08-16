@@ -1,0 +1,25 @@
+<meta charset="utf-8">
+
+<div id="version">
+
+	<div id="back" onclick="window.location='#/version/{{versionId}}/{{index-1}}'" ng-show="version.back == 'yes'"></div>
+	<div id="next" onclick="window.location='#/version/{{versionId}}/{{index+1}}'" ng-show="version.next == 'yes'"></div>
+	
+	<div id="close" onclick="window.location='#/marque/{{version.marque.idMarque}}'"></div>
+	
+	<div id="context">
+		<span>{{version.marque.nomMarque}} - {{version.modele.nomModele}}</span>
+		<span>{{version.version.nom}} - {{version.version.anneeModele}}</span>
+		<a ng-href="#/saisie/edit/version?id={{versionId}}" class="edit">Éditer la version</a>
+		<a ng-href="#/saisie/edit/docVersion?id={{version.doc.idDocumentVersion}}" class="edit" ng-show="version.doc.idDocumentVersion != null">Éditer le document</a>
+	  <a ng-href="#/saisie/add/docVersion?id={{versionId}}" class="add">Ajouter un document</a>
+	</div>
+	
+	<div id="legend" ng-hide="legend == ''">{{legend}}</div>	
+	
+	<div id="photo">
+		<img ng-src="{{version.doc.img}}" />
+ 	</div>
+ 
+ 
+</div>
