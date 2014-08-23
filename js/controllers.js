@@ -1,81 +1,134 @@
 'use strict';
 
-/* Controllers */
-
 function AutosCtrl($scope, Auto) {
   $scope.marques = Auto.query();
   
   $scope.$parent.$root.pageTitle = "";
   
-  $scope.predicate = 'nomMarque';
-  
-  $scope.reverseAlpha = false;
-  $scope.reversePays = false;
-  
-  $scope.doReverseAlpha = function()
-  {
-	  var value = $scope.reverseAlpha;
-	  $scope.reverseAlpha = !$scope.reverseAlpha;
-	  $scope.reversePays = false;
-	  return value;
+  $scope.backgroundImage = function(marque) {
+    return {'background-image': 'url(img/logo/' + marque.idMarque + '.png)'};
   }
-  $scope.doReversePays = function()
-  {
-	  var value = $scope.reversePays;
-	  $scope.reverseAlpha = false;
-	  $scope.reversePays = !$scope.reversePays;
-	  return value;
+  
+  $scope.goToMarque = function(marque) {
+    window.location = '#/marque/' + marque.idMarque;
   }
+  
+  $scope.goToMesAutosAMoi = function () {
+    window.location = '#/marque/1129';
+  }
+  
 }
 
-//AutoListCtrl.$inject = ['$scope', 'Auto'];
+// ------------------------------------------------------------------------------------------------------
 
-function MarqueCtrl($scope, $routeParams, Auto) {
+function MarqueCtrl($scope, $routeParams, $location, $anchorScroll, Auto) {
   $scope.marque = Auto.get({service: 'marque', id: $routeParams.marqueId}, function(marque) {
 	  $scope.histo = marque.histo;
-	  $scope.$parent.$root.pageTitle = " - " + marque.nomMarque;  
+	  $scope.$parent.$root.pageTitle = " - " + marque.nomMarque;
+	  
+    setTimeout(function () {
+	    $anchorScroll();
+    }, 100);
   });
+  
+  $scope.toggle = true;
+  
+  $scope.showModeles = function() {
+    $scope.toggle = true;
+  }
+  $scope.showHistoire = function() {
+    $scope.toggle = false;
+  }
+  
+  $scope.backgroundImage = function(version) {
+    return {'background-image': 'url(' + version.img + ')'};
+  }
+  
+  $scope.goToVersion = function(marque) {
+    window.location = "#/version/" + marque.idVersion;
+  }
 }
 
-//AutoDetailCtrl.$inject = ['$scope', '$routeParams', 'Auto'];
+//------------------------------------------------------------------------------------------------------
 
 function VersionCtrl($scope, $routeParams, Auto) {
-  $scope.version = Auto.get({service: 'version', id: $routeParams.versionId, index: $routeParams.index}, function(version) {
+  $scope.version = Auto.get({service: 'version', id: $routeParams.versionId}, function(version) {
 	  
 	  $scope.$parent.$root.pageTitle = " - " + version.marque.nomMarque + " - " + version.modele.nomModele;
-	  
-	  var legend = [];
-	  if(version.doc.source != '') legend.push(version.doc.source);
-	  if(version.doc.date != '') legend.push(version.doc.date);
-	  if(version.doc.legende != '') legend.push(version.doc.legende);
-	  
-	  $scope.legend = legend.join(' - ');
-	   
+	  $scope.versionId = $routeParams.versionId;
   });
-  $scope.versionId = $routeParams.versionId;
-  $scope.index = parseInt($routeParams.index);
+  
+  $scope.selected = 0;
+  
+  $scope.getLegend = function() {
+    var doc = $scope.version.docs[$scope.selected];
+    var legend = [];
+    if(doc.source != '') legend.push(doc.source);
+    if(doc.date != '') legend.push(doc.date);
+    if(doc.legende != '') legend.push(doc.legende);
+    return legend.join(' - ');
+  }
+  
+  $scope.backgroundImage = function(index) {
+    if (!$scope.version.docs) {
+      return null;
+    }
+    return {'background-image': 'url(' + getImage(index) + ')'};
+  }
+  
+  var getImage = function (index) {
+     return 'img/version/' + $scope.version.docs[index].idDocumentVersion + '.jpg';
+  };
+  
+  $scope.maximize = function(index) {
+    $scope.selected = index;
+  }
+  
+  $scope.openInNewWindow = function() {
+    window.open(getImage($scope.selected));
+  }
 }
 
+//------------------------------------------------------------------------------------------------------
 
 function SaisieCtrl($scope, $routeParams, Auto) {
-	  $scope.saisie = Auto.get({service: 'saisie', action: $routeParams.action, objet: $routeParams.objet, id: $routeParams.id}, function(saisie) {
-		  $scope.$parent.$root.pageTitle = " - Saisie";
-		  $scope.objet = saisie.objet;
+  $scope.saisie = Auto.get({service: 'saisie', action: $routeParams.action, objet: $routeParams.objet, id: $routeParams.id}, function(saisie) {
+    $scope.$parent.$root.pageTitle = ' - Saisie';		  $scope.objet = saisie.objet;
 		  
 		  if(saisie.action == "edit")
 			  $scope.saisie.ordre = parseInt(saisie.ordre);
 		  else 
 			  $scope.saisie.ordre = 0;
-	  });	  
+	  });
 	  
-	  $scope.updated = false;
-	  
-	  $scope.update = function()
-	  {
+	  $scope.update = function() {
 		  Auto.save({service: 'update'}, this.saisie, function(update) {
-			  $scope.status = update;
-			  $scope.updated = true;
+		    history.back();
 		  });
 	  };
 }
 
+//------------------------------------------------------------------------------------------------------
+
+function SearchCtrl($scope, $routeParams, Auto) {
+  $scope.list = Auto.get({service: 'list'}, function(version) {});
+  
+  $scope.show = false;
+  
+  $scope.showResults = function(evt) {
+    $scope.show = true;
+    evt.stopPropagation();
+  }
+  $scope.hideResults = function() {
+    $scope.show = false;
+  }
+  
+  $scope.goToMarque = function (marque) {
+    $scope.show = false;
+    window.location = '#/marque/' + marque.idMarque;
+  }
+  $scope.goToModele = function (modele) {
+    $scope.show = false;
+    window.location = '#/marque/' + modele.idMarque + '#modele-' + modele.idModele;
+  }
+}

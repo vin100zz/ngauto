@@ -3,7 +3,6 @@
 include_once "db.php";
 
 $idVersion = $_REQUEST["id"];
-$index = $_REQUEST["index"];
 
 // SQL
 $aMarque = DBAccess::querySingle
@@ -27,16 +26,7 @@ $aResponse = array();
 $aResponse['marque'] = $aMarque;
 $aResponse['modele'] = $aModele;
 $aResponse['version'] = $aVersion;
-
-$aResponse['back'] = ($index <= 0 ? "no" : "yes");
-$aResponse['next'] = ($index >= count($aDocumentsVersion)-1 ? "no" : "yes");
-
-if(isset($aDocumentsVersion[$index]))
-{
-	$aDocumentsVersion[$index]['img'] = getImage("img/version/" . $aDocumentsVersion[$index]['idDocumentVersion']);
-
-	$aResponse['doc'] = $aDocumentsVersion[$index];
-}
+$aResponse['docs'] = $aDocumentsVersion;
 
 print json_encode($aResponse, JSON_PRETTY_PRINT);
 

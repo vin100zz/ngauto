@@ -85,7 +85,12 @@ else if($action == "edit")
 	{
 		$aResult = DBAccess::querySingle
 		(
-			"SELECT * FROM documentVersion WHERE idDocumentVersion='$id'"
+			"SELECT *
+			FROM documentVersion
+			JOIN version on version.idVersion = documentVersion.idVersion
+			JOIN modele on version.idModele = modele.idModele
+      JOIN marque on marque.idMarque = modele.idMarque
+			WHERE idDocumentVersion='$id'"
 		);
 	}
 }

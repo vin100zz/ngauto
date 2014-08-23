@@ -1,0 +1,205 @@
+@font-face {
+  font-family: "MesAutos_Title_Font";
+  src: url('ATOSalutino.ttf');
+}
+@font-face {
+  font-family: "MesAutos_Body_Font";
+  src: url('OpenSans.eot');
+}
+
+body {
+  background: #eaeaee;
+  font-family: 'MesAutos_Body_Font', sans-serif;
+  font-size: 10pt;
+}
+a {
+  text-decoration: none;
+}
+
+/* Forms */
+input[type='text'],
+input[type='number'],
+select,
+textarea {
+	padding: 5px 10px;
+	width: 200px;
+	box-sizing: border-box;
+}
+input[readonly='readonly'],
+select[readonly='readonly'],
+textarea[readonly='readonly'] {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.control-group {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+.control-label {
+  display: inline-block;
+  width: 400px;
+  margin-right: 10px;
+  text-align: right;
+}
+.control-label:after {
+  content: ' :';
+}
+.controls {
+  display: inline-block;
+}
+.form-actions {
+  margin-left: 410px;
+}
+
+/* Buttons */
+.fa {
+  font-size: 20px;
+  color: #888;
+  opacity: 1;
+}
+.fa:hover {
+  opacity: 0.75;
+  text-decoration: none;
+}
+.button {
+	color: #eee;
+	background: #C80056;
+	border: none;
+	border-radius: 2px;
+	padding: 5px 10px;
+	cursor: pointer;
+	opacity: 1;
+}
+.button:hover {
+	opacity: 0.75;
+}
+.button .fa {
+	color: #eee;
+	margin-right: 7px;
+	font-size: 16px;
+}
+.button > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* Titre */
+#titre {
+	position: fixed;
+	top: 0;
+  left: 0;
+  right: 0;
+	display: block;
+	padding: 20px 0 20px 120px;
+	margin-bottom: 30px;
+	font-family: 'MesAutos_Title_Font';
+	font-size: 32pt;
+	background: url(logo.png) no-repeat 30px 30px #fff;
+	border-bottom: 2px solid #C80056;
+	z-index: 2;
+}
+#titre a,
+#titre a:hover {
+	color: #333;
+	text-decoration: none;
+}
+#titre .maj {
+	color: #C80056;
+	font-size: 36pt;
+}
+
+/* Content */
+#content {
+	position: absolute;
+	top: 120px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/* Header */
+#header {
+	position: fixed;
+	top: 25px;
+	right: 70px;
+	height: 40px;
+  color: #333;
+  font-size: 26pt;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  z-index: 3;
+}
+#header .logo {
+  margin-left: 20px;
+  height: 80px;
+}
+#header span {
+	margin-left: 15px;
+}
+
+/* Actions */
+#actions {
+	position: fixed;
+	top: 35px;
+	right: 20px;
+	z-index: 3;
+}
+
+/* Search */
+#search {
+	position: fixed;
+	top: 30px;
+	left: 400px;
+	z-index: 3;
+}
+#search .input-icon {
+	opacity: 0.99;
+	margin-right: -25px;
+	font-size: 16px;
+}
+#search input {
+	width: 200px;
+	padding-left: 30px;
+}
+#search .results {
+  background: #fff;
+  border: 1px solid #ccc;
+  width: 500px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+#search .results > li {
+	cursor: pointer;
+	padding: 5px 10px;
+}
+#search .results > li:hover {
+  background: #ccc;
+}
+#search .results .marque-modele {
+  float: right;
+}
+
+
+/* Block */
+.block {
+  background: #fff;
+  border: 1px solid #C80056;
+  margin: 0px 20px 30px 20px;
+  padding: 20px;
+  border-radius: 2px;
+}
+
+/* Thumbnail */
+.thumbnail {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+/* Anchor */
+.anchor-hack {
+	position: absolute;
+	top: -120px;
+}
