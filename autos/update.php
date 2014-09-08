@@ -19,6 +19,7 @@ if($objet == "marque")
 {
 	$nomMarque = getParam("nomMarque");
 	$pays = getParam("pays");
+	$modeleOrder = $aParams["modeleOrder"];
 	
 	if($action == "add")
 	{
@@ -28,11 +29,16 @@ if($objet == "marque")
 	{
 		$idMarque = getParam("idMarque");
 		$aStatus['query'] = "UPDATE marque SET nomMarque='$nomMarque', pays='$pays' WHERE idMarque='$idMarque'";
+		
+		$pos = 0;
+    foreach ($modeleOrder as $key) {
+      DBAccess::exec("UPDATE modele SET ordre='$pos' WHERE idModele=$key");
+      ++$pos;
+    }
 	}
 }
 else if($objet == "modele")
 {
-	$ordre = getParam("ordre");
 	$nomModele = getParam("nomModele");
 	$categorie = getParam("categorie");
 	$debut = getParam("debut");
@@ -44,22 +50,30 @@ else if($objet == "modele")
 	$production = getParam("production");
 	$commentaire = getParam("commentaire");
 	$idMarque = getParam("idMarque");
+	$versionOrder = $aParams["versionOrder"];
 	
 	if($action == "add")
 	{
-		$aStatus['query'] = "INSERT INTO modele(ordre, nomModele, categorie, debut, fin, cylindree_min, cylindree_max, puissance_min, puissance_max, 
+		$aStatus['query'] = "INSERT INTO modele(nomModele, categorie, debut, fin, cylindree_min, cylindree_max, puissance_min, puissance_max, 
 																					  production, commentaire, idMarque)
-																		 VALUES('$ordre', '$nomModele', '$categorie', '$debut', '$fin', '$cylindree_min', '$cylindree_max', '$puissance_min', '$puissance_max',
+																		 VALUES('$nomModele', '$categorie', '$debut', '$fin', '$cylindree_min', '$cylindree_max', '$puissance_min', '$puissance_max',
 																					  '$production', '$commentaire', '$idMarque')";
 	}	
 	else
 	{
 		$idModele = getParam("idModele");
 		$aStatus['query'] = "UPDATE modele
-												 SET ordre='$ordre', nomModele='$nomModele', categorie='$categorie', debut='$debut', fin='$fin', cylindree_min='$cylindree_min',
+												 SET nomModele='$nomModele', categorie='$categorie', debut='$debut', fin='$fin', cylindree_min='$cylindree_min',
 														 cylindree_max='$cylindree_max', puissance_min='$puissance_min', puissance_max='$puissance_max',
 														 production='$production', commentaire='$commentaire', idMarque='$idMarque'
 												 WHERE idModele = '$idModele'";
+		
+		$pos = 0;
+    foreach ($versionOrder as $key) {
+      DBAccess::exec("UPDATE version SET ordre='$pos' WHERE idVersion=$key");
+      ++$pos;
+    }
+    
 	}
 }
 else if($objet == "version")

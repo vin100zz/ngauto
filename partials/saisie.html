@@ -145,7 +145,6 @@
       </div>
     </div>
     
-    
     <!-- version -->		    
     <div class="control-group"  ng-show="objet == 'version' || objet == 'docVersion'">
       <label class="control-label" for="anneeModele">Année Modèle</label>
@@ -191,7 +190,7 @@
       </div>
     </div>
     
-    <div class="control-group" ng-show="objet == 'modele' || objet == 'docMarque' || objet == 'docVersion'">
+    <div class="control-group" ng-show="objet == 'docMarque' || objet == 'docVersion'">
       <label class="control-label" for="ordre">Ordre</label>
       <div class="controls">
         <input type="number" min="0" class="input-xlarge" id="ordre" ng-model="saisie.ordre" />
@@ -203,6 +202,29 @@
       <div class="controls">
         <input type="checkbox" class="input-xlarge" id="motCle" ng-model="saisie.motCle" ng-checked="saisie.motCle == 'EMB'" />
       </div>
+    </div>
+    
+    <!-- ordres -->
+    <div class="control-group" ng-show="objet == 'marque'">
+      <label class="control-label">Ordre des modèles</label>
+      <ul class="reorder">
+        <li ng-repeat="modele in saisie.modeles">
+          <span class="label">{{modele.nomModele}}</span>
+          <a class="fa fa-chevron-up" ng-show="!$first" ng-click="moveModeleUp(modele.idModele)"></a>
+          <a class="fa fa-chevron-down" ng-show="!$last" ng-click="moveModeleDown(modele.idModele)"></a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="control-group" ng-show="objet == 'modele'">
+      <label class="control-label">Ordre des versions</label>
+      <ul class="reorder">
+        <li ng-repeat="version in saisie.versions">
+          <span class="label">{{version.nom}}</span>
+          <a class="fa fa-chevron-up" ng-show="!$first" ng-click="moveVersionUp(version.idVersion)"></a>
+          <a class="fa fa-chevron-down" ng-show="!$last" ng-click="moveVersionDown(version.idVersion)"></a>
+        </li>
+      </ul>
     </div>
     
     <div class="form-actions">

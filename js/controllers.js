@@ -93,7 +93,8 @@ function VersionCtrl($scope, $routeParams, Auto) {
 
 function SaisieCtrl($scope, $routeParams, Auto) {
   $scope.saisie = Auto.get({service: 'saisie', action: $routeParams.action, objet: $routeParams.objet, id: $routeParams.id}, function(saisie) {
-    $scope.$parent.$root.pageTitle = ' - Saisie';		  $scope.objet = saisie.objet;
+    $scope.$parent.$root.pageTitle = ' - Saisie';
+    $scope.objet = saisie.objet;
 		  
 		  if(saisie.action == "edit")
 			  $scope.saisie.ordre = parseInt(saisie.ordre);
@@ -102,10 +103,47 @@ function SaisieCtrl($scope, $routeParams, Auto) {
 	  });
 	  
 	  $scope.update = function() {
+	    if ($scope.saisie.objet === 'marque') {
+  	    $scope.saisie.modeleOrder = [];
+  	    for (var i=0; i<$scope.saisie.modeles.length; ++i) {
+  	      $scope.saisie.modeleOrder.push($scope.saisie.modeles[i].idModele);
+  	    }
+  	  } else if ($scope.saisie.objet === 'modele') {
+        $scope.saisie.versionOrder = [];
+        for (var i=0; i<$scope.saisie.versions.length; ++i) {
+          $scope.saisie.versionOrder.push($scope.saisie.versions[i].idVersion);
+        }
+  	  }
 		  Auto.save({service: 'update'}, this.saisie, function(update) {
 		    history.back();
 		  });
 	  };
+	  
+	  var move = function (id, items, idFn, posFn) {
+      for (var index=0; index < items.length; ++index) {
+        if (idFn(items[index]) === id) {
+          break;
+        }
+      }
+      var spliced = items.splice(index, 1);
+      items.splice(posFn(index), 0, spliced[0]);
+	  }
+	  
+	  $scope.moveModeleUp = function (idVersion) {
+	    move.call(this, idVersion, $scope.saisie.modeles, function(item) {return item.idModele}, function(index) {return index-1;})
+    }
+
+    $scope.moveModeleDown = function (idVersion) {
+      move.call(this, idVersion, $scope.saisie.modeles, function(item) {return item.idModele}, function(index) {return index+1;})
+    }
+	  
+	  $scope.moveVersionUp = function (idVersion) {
+	    move.call(this, idVersion, $scope.saisie.versions, function(item) {return item.idVersion}, function(index) {return index-1;})
+	  }
+
+	  $scope.moveVersionDown = function (idVersion) {
+	    move.call(this, idVersion, $scope.saisie.versions, function(item) {return item.idVersion}, function(index) {return index+1;})
+    }
 }
 
 //------------------------------------------------------------------------------------------------------

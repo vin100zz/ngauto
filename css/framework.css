@@ -52,6 +52,39 @@ textarea[readonly='readonly'] {
   margin-left: 410px;
 }
 
+/* Reorder */
+.reorder {
+	border: 0 solid #aaa;
+  border-width: 0 0 1px 1px;
+}
+.reorder > li {
+	width: 300px;
+	padding: 5px 10px;
+	border: 0 solid #aaa;
+  border-width: 1px 1px 0 0;
+	box-sizing: border-box;
+	position: relative;
+}
+.reorder > li .fa {
+  position: absolute;
+  top: 5px;
+  font-size: 14px;
+}
+.reorder > li .label {
+  width: 240px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 14px;
+}
+.reorder > li .fa-chevron-up {
+  right: 5px;    
+}
+.reorder > li .fa-chevron-down {
+  right: 25px; 
+}
+
 /* Buttons */
 .fa {
   font-size: 20px;

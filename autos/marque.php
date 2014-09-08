@@ -32,7 +32,7 @@ foreach($aModeles as $aId => $aModele)
 		"SELECT *
 		FROM version
 		WHERE idModele='$idModele'
-		ORDER BY anneeModele"
+		ORDER BY ordre, anneeModele"
 	);
 	
 	foreach($aModeles[$aId]['versions'] as $aId => &$aVersion)

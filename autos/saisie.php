@@ -102,6 +102,10 @@ if($objet == "marque")
 	(
 		"SELECT DISTINCT pays FROM marque"
 	);
+	 $aResult['modeles'] = DBAccess::query
+  (
+    "SELECT * FROM modele WHERE idMarque = $id ORDER BY ordre"
+  );
 }
 else if($objet == "modele")
 {
@@ -109,6 +113,10 @@ else if($objet == "modele")
 	(
 		"SELECT DISTINCT categorie FROM modele ORDER BY categorie"
 	);
+	$aResult['versions'] = DBAccess::query
+  (
+    "SELECT * FROM version WHERE idModele = $id ORDER BY ordre, anneeModele"
+  );
 }
 else if($objet == "version")
 {
