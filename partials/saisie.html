@@ -204,28 +204,9 @@
       </div>
     </div>
     
-    <!-- ordres -->
-    <div class="control-group" ng-show="objet == 'marque'">
-      <label class="control-label">Ordre des modèles</label>
-      <ul class="reorder">
-        <li ng-repeat="modele in saisie.modeles">
-          <span class="label">{{modele.nomModele}}</span>
-          <a class="fa fa-chevron-up" ng-show="!$first" ng-click="moveModeleUp(modele.idModele)"></a>
-          <a class="fa fa-chevron-down" ng-show="!$last" ng-click="moveModeleDown(modele.idModele)"></a>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="control-group" ng-show="objet == 'modele'">
-      <label class="control-label">Ordre des versions</label>
-      <ul class="reorder">
-        <li ng-repeat="version in saisie.versions">
-          <span class="label">{{version.nom}}</span>
-          <a class="fa fa-chevron-up" ng-show="!$first" ng-click="moveVersionUp(version.idVersion)"></a>
-          <a class="fa fa-chevron-down" ng-show="!$last" ng-click="moveVersionDown(version.idVersion)"></a>
-        </li>
-      </ul>
-    </div>
+    <!-- ordres -->   
+    <div ng-sorter cfg="modeleSorterCfg"></div>
+    <div ng-sorter cfg="versionSorterCfg"></div>
     
     <div class="form-actions">
       <button type="submit" id="update" class="button"><span class="fa fa-check"></span><span>Sauvegarder</span></button>

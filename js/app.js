@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('autocat', ['autocatFilters', 'autocatServices']).
+angular.module('auto', ['autoFilters', 'autoServices', 'autoDirectives']).
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
       when('', {templateUrl: 'partials/autos.html',   controller: AutosCtrl}).

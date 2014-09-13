@@ -100,6 +100,22 @@ function SaisieCtrl($scope, $routeParams, Auto) {
 			  $scope.saisie.ordre = parseInt(saisie.ordre);
 		  else 
 			  $scope.saisie.ordre = 0;
+		  
+	    $scope.modeleSorterCfg = {
+	      show: $scope.objet === 'marque',
+	      label: 'Ordre des modèles',
+	      list: $scope.saisie.modeles,
+	      idFn: function(item) {return item.idModele;},
+        labelFn: function(item) {return item.nomModele;}
+	    }
+	    
+	    $scope.versionSorterCfg = {
+        show: $scope.objet === 'modele',
+        label: 'Ordre des versions',
+        list: $scope.saisie.versions,
+        idFn: function(item) {return item.idVersion;},
+        labelFn: function(item) {return item.nom + (item.type ? ' ' + item.type : '') + (item.anneeModele ? ' (' + item.anneeModele + ')' : '');}
+      }
 	  });
 	  
 	  $scope.update = function() {
@@ -118,32 +134,6 @@ function SaisieCtrl($scope, $routeParams, Auto) {
 		    history.back();
 		  });
 	  };
-	  
-	  var move = function (id, items, idFn, posFn) {
-      for (var index=0; index < items.length; ++index) {
-        if (idFn(items[index]) === id) {
-          break;
-        }
-      }
-      var spliced = items.splice(index, 1);
-      items.splice(posFn(index), 0, spliced[0]);
-	  }
-	  
-	  $scope.moveModeleUp = function (idVersion) {
-	    move.call(this, idVersion, $scope.saisie.modeles, function(item) {return item.idModele}, function(index) {return index-1;})
-    }
-
-    $scope.moveModeleDown = function (idVersion) {
-      move.call(this, idVersion, $scope.saisie.modeles, function(item) {return item.idModele}, function(index) {return index+1;})
-    }
-	  
-	  $scope.moveVersionUp = function (idVersion) {
-	    move.call(this, idVersion, $scope.saisie.versions, function(item) {return item.idVersion}, function(index) {return index-1;})
-	  }
-
-	  $scope.moveVersionDown = function (idVersion) {
-	    move.call(this, idVersion, $scope.saisie.versions, function(item) {return item.idVersion}, function(index) {return index+1;})
-    }
 }
 
 //------------------------------------------------------------------------------------------------------

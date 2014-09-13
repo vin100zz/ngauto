@@ -2,7 +2,7 @@
 
 /* Filters */
 
-angular.module('autocatFilters', []).filter('categorieType', function() {
+angular.module('autoFilters', []).filter('categorieType', function() {
   return function(input) {
   	input = input.toUpperCase();
   

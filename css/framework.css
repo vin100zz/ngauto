@@ -52,37 +52,33 @@ textarea[readonly='readonly'] {
   margin-left: 410px;
 }
 
-/* Reorder */
-.reorder {
+/* Sorter */
+.sorter > ul {
 	border: 0 solid #aaa;
   border-width: 0 0 1px 1px;
 }
-.reorder > li {
+.sorter > ul > li {
 	width: 300px;
 	padding: 5px 10px;
 	border: 0 solid #aaa;
   border-width: 1px 1px 0 0;
 	box-sizing: border-box;
-	position: relative;
+	cursor: pointer;
 }
-.reorder > li .fa {
-  position: absolute;
-  top: 5px;
-  font-size: 14px;
+.sorter > ul > li.selected {
+  background: #ccc;
 }
-.reorder > li .label {
-  width: 240px;
+.sorter > ul > li .label {
+  width: 300px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
   line-height: 14px;
 }
-.reorder > li .fa-chevron-up {
-  right: 5px;    
-}
-.reorder > li .fa-chevron-down {
-  right: 25px; 
+.sorter .fa {
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 /* Buttons */
