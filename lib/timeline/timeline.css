@@ -39,6 +39,18 @@
   position: absolute;
   background: #006666;
 }
+.timeline-container .event-marker:after {
+  position: absolute;
+  bottom: -5px;
+  left: -5px;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #006666;
+  border-radius: 50%;
+  z-index: 11;
+}
+
 .timeline-container .event-duration {
   position: absolute;
   background: #006666;
