@@ -12,11 +12,12 @@
 </div>
 
 <div id="toggle">
-  <div ng-class="{true:'selected', false:'notSelected'}[toggle]" ng-click="showModeles()"><span class="fa fa-car"></span>Modèles</div>
-  <div ng-class="{true:'notSelected', false:'selected'}[toggle]" ng-click="showHistoire()"><span class="fa fa-clock-o"></span>Histoire</div>
+  <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'MODELES']" ng-click="showModeles()"><span class="fa fa-car"></span>Modèles</div>
+  <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'TIMELINE']" ng-click="showTimeline()"><span class="fa fa-sort-amount-asc"></span>Timeline</div>
+  <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'HISTOIRE']" ng-click="showHistoire()"><span class="fa fa-clock-o"></span>Histoire</div>
 </div>
 	
-<ul id="modeles" ng-show="toggle">
+<ul id="modeles" ng-show="toggle == 'MODELES'">
   <li ng-repeat="modele in marque.modeles | filter:queryModele | filter:queryCategorie" class="block">
   
     <!-- hack to have a margin on top of the modele when scrolling to it -->
@@ -74,8 +75,11 @@
     
   </li>
 </ul>
-	      
-<div id="histo" ng-show="!toggle">
+
+<div id="timeline" ng-show="toggle == 'TIMELINE'"></div>
+      
+<div id="histo" ng-show="toggle == 'HISTOIRE'">
+
  	<div ng-bind-html-unsafe="histo" ng-show="histo != null"></div>
  	
  	<div ng-repeat="doc in marque.docs">

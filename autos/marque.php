@@ -52,7 +52,6 @@ foreach($aModeles as $aId => $aModele)
 	);
 }
 
-$aMarque['others'] = $aMarques;
 $aMarque['modeles'] = $aModeles;
 $aMarque['docs'] = $aDocumentsMarque;
 $aMarque['categories'] = isset($aCategories) ? $aCategories : null;

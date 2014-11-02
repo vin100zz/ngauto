@@ -29,15 +29,35 @@ function MarqueCtrl($scope, $routeParams, $location, $anchorScroll, Auto) {
     setTimeout(function () {
 	    $anchorScroll();
     }, 100);
+    
+    var events = [];
+    for (var i=0; i<marque.modeles.length; ++i) {
+      var modele = marque.modeles[i];
+      events.push({
+        begin: modele.debut,
+        end: modele.fin,
+        name: modele.nomModele,
+        picture: modele.versions.length > 0 ? modele.versions[0].img : null,
+        link: '#/marque/' + marque.idMarque + '#modele-' + modele.idModele
+      });
+    }
+    
+    drawTimeline({
+      container: document.querySelector('#timeline'),
+      events: events
+    });
   });
   
-  $scope.toggle = true;
-  
+  $scope.toggle = 'MODELES';
+    
   $scope.showModeles = function() {
-    $scope.toggle = true;
+    $scope.toggle = 'MODELES';
+  }
+  $scope.showTimeline = function() {
+    $scope.toggle = 'TIMELINE';
   }
   $scope.showHistoire = function() {
-    $scope.toggle = false;
+    $scope.toggle = 'HISTOIRE';
   }
   
   $scope.backgroundImage = function(version) {

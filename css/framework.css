@@ -8,7 +8,7 @@
 }
 
 body {
-  background: #eaeaee;
+  background: #E2E2E2;
   font-family: 'MesAutos_Body_Font', sans-serif;
   font-size: 10pt;
 }
@@ -93,7 +93,7 @@ textarea[readonly='readonly'] {
 }
 .button {
 	color: #eee;
-	background: #C80056;
+	background: #006666;
 	border: none;
 	border-radius: 2px;
 	padding: 5px 10px;
@@ -125,8 +125,8 @@ textarea[readonly='readonly'] {
 	font-family: 'MesAutos_Title_Font';
 	font-size: 32pt;
 	background: url(logo.png) no-repeat 30px 30px #fff;
-	border-bottom: 2px solid #C80056;
-	z-index: 2;
+	border-bottom: 1px solid #006666;
+	z-index: 20;
 }
 #titre a,
 #titre a:hover {
@@ -134,7 +134,7 @@ textarea[readonly='readonly'] {
 	text-decoration: none;
 }
 #titre .maj {
-	color: #C80056;
+	color: #006666;
 	font-size: 36pt;
 }
 
@@ -158,7 +158,7 @@ textarea[readonly='readonly'] {
   font-weight: bold;
   display: flex;
   align-items: center;
-  z-index: 3;
+  z-index: 30;
 }
 #header .logo {
   margin-left: 20px;
@@ -173,7 +173,7 @@ textarea[readonly='readonly'] {
 	position: fixed;
 	top: 35px;
 	right: 20px;
-	z-index: 3;
+	z-index: 30;
 }
 #actions .fa {
 	margin-left: 10px;
@@ -184,7 +184,7 @@ textarea[readonly='readonly'] {
 	position: fixed;
 	top: 30px;
 	left: 400px;
-	z-index: 3;
+	z-index: 30;
 }
 #search .input-icon {
 	opacity: 0.99;
@@ -217,7 +217,7 @@ textarea[readonly='readonly'] {
 /* Block */
 .block {
   background: #fff;
-  border: 1px solid #C80056;
+  border-left: 3px solid #006666;
   margin: 0px 20px 30px 20px;
   padding: 20px;
   border-radius: 2px;
