@@ -11,12 +11,14 @@
 	height: 140px;
   vertical-align: top;
   border: 1px solid rgba(0,0,0,0);
+  margin-bottom: 10px;
+  background: rgba(128, 128, 128, 0.1);
 }
 #marques li:empty {
 	height: 0;
 }
 #marques li:hover {
-  background: #fff;
+  background: rgba(128, 128, 128, 0.3);
 }
 #marques .logo {
   width: 120px;

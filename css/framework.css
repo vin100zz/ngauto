@@ -85,10 +85,10 @@ textarea[readonly='readonly'] {
 .fa {
   font-size: 20px;
   color: #888;
-  opacity: 1;
+  opacity: 0.75;
 }
 .fa:hover {
-  opacity: 0.75;
+  opacity: 1;
   text-decoration: none;
 }
 .button {
