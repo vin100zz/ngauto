@@ -25,6 +25,8 @@
     <div id="modele-{{modele.idModele}}" class="anchor-hack"></div>
   	   
     <div class="nom">
+      <span ng-show="modele.miniModele == 'Y'" class="fa fa-check-square jelai"></span>
+      <span ng-show="modele.miniModele != 'Y'" class="fa fa-square jelai"></span>
   	  {{modele.nomModele}}
   	</div>
   	
@@ -57,7 +59,11 @@
 				  <div ng-style="backgroundImage(version)" class="thumbnail emblematic"></div>
 				  <div class="comment">
 				    <div class="type">{{version.anneeModele}}<span ng-show="version.type != ''"> - </span>{{version.type | categorieType}}</div>
-					  <div>{{version.nom}}</div>
+					  <div>
+              <span ng-show="version.miniVersion == 'Y'" class="fa fa-check-square jelai"></span>
+              <span ng-show="version.miniVersion != 'Y'" class="fa fa-square jelai"></span>
+              <span>{{version.nom}}</span>
+            </div>
 			    </div>
 				</li>
 				<li></li>

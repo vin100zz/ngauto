@@ -51,13 +51,14 @@ else if($objet == "modele")
 	$commentaire = getParam("commentaire");
 	$idMarque = getParam("idMarque");
 	$versionOrder = $aParams["versionOrder"];
+  $miniModele = getParam("miniModele") == '1' ? 'Y' : 'N';
 	
 	if($action == "add")
 	{
 		$aStatus['query'] = "INSERT INTO modele(nomModele, categorie, debut, fin, cylindree_min, cylindree_max, puissance_min, puissance_max, 
-																					  production, commentaire, idMarque)
+																					  production, commentaire, idMarque, miniModele)
 																		 VALUES('$nomModele', '$categorie', '$debut', '$fin', '$cylindree_min', '$cylindree_max', '$puissance_min', '$puissance_max',
-																					  '$production', '$commentaire', '$idMarque')";
+																					  '$production', '$commentaire', '$idMarque', '$miniModele')";
 	}	
 	else
 	{
@@ -65,7 +66,7 @@ else if($objet == "modele")
 		$aStatus['query'] = "UPDATE modele
 												 SET nomModele='$nomModele', categorie='$categorie', debut='$debut', fin='$fin', cylindree_min='$cylindree_min',
 														 cylindree_max='$cylindree_max', puissance_min='$puissance_min', puissance_max='$puissance_max',
-														 production='$production', commentaire='$commentaire', idMarque='$idMarque'
+														 production='$production', commentaire='$commentaire', idMarque='$idMarque', miniModele='$miniModele'
 												 WHERE idModele = '$idModele'";
 		
 		$pos = 0;
@@ -82,17 +83,18 @@ else if($objet == "version")
 	$type = getParam("type");
 	$nom = getParam("nom");
 	$idModele = getParam("idModele");
+  $miniVersion = getParam("miniVersion") == '1' ? 'Y' : 'N';
 	
 	if($action == "add")
 	{
-		$aStatus['query'] = "INSERT INTO version(anneeModele, type, nom, idModele)
-																		 VALUES('$anneeModele', '$type', '$nom', '$idModele')";
+		$aStatus['query'] = "INSERT INTO version(anneeModele, type, nom, idModele, miniVersion)
+																		 VALUES('$anneeModele', '$type', '$nom', '$idModele', '$miniVersion')";
 	}	
 	else
 	{
 		$idVersion = getParam("idVersion");
 		$aStatus['query'] = "UPDATE version
-												 SET anneeModele='$anneeModele', type='$type', nom='$nom', idModele='$idModele'
+												 SET anneeModele='$anneeModele', type='$type', nom='$nom', idModele='$idModele', miniVersion='$miniVersion'
 												 WHERE idVersion = '$idVersion'";
 	}
 }

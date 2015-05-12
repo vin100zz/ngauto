@@ -42,7 +42,7 @@
 	display: inline-block;
 	vertical-align: middle;
 }
-#marques .meautosamoi:before {
+#marques .mesautosamoi:before {
 	display: block;
 	font-size: 70pt;
 	text-align: center;
@@ -179,6 +179,19 @@
   font-size: 8pt;
 }
 
+#modeles .jelai,
+#modeles .jelai:hover {
+	color: #006666;
+	opacity: 0.75;
+}
+#modeles .nom .jelai {
+  margin-right: 5px;
+}
+#modeles .comment .jelai {
+  font-size: 12px;
+  line-height: 12px;
+  margin-right: 2px;
+}
 
 /* Histo */
 #histo {
