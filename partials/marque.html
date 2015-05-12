@@ -14,6 +14,7 @@
 <div id="toggle">
   <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'MODELES']" ng-click="showModeles()"><span class="fa fa-car"></span>Modèles</div>
   <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'TIMELINE']" ng-click="showTimeline()"><span class="fa fa-sort-amount-asc"></span>Timeline</div>
+  <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'WIKI']" ng-click="showWiki()"><span class="fa fa-quote-left"></span>Wiki</div>
   <div ng-class="{true:'selected', false:'notSelected'}[toggle == 'HISTOIRE']" ng-click="showHistoire()"><span class="fa fa-clock-o"></span>Histoire</div>
 </div>
 	
@@ -55,7 +56,7 @@
 				<li ng-repeat="version in modele.versions" ng-click="goToVersion(version)">
 				  <div ng-style="backgroundImage(version)" class="thumbnail emblematic"></div>
 				  <div class="comment">
-				    <div class="type">{{version.anneeModele}} - {{version.type | categorieType}}</div>
+				    <div class="type">{{version.anneeModele}}<span ng-show="version.type != ''"> - </span>{{version.type | categorieType}}</div>
 					  <div>{{version.nom}}</div>
 			    </div>
 				</li>
@@ -77,6 +78,10 @@
 </ul>
 
 <div id="timeline" ng-show="toggle == 'TIMELINE'"></div>
+  
+<div id="wiki" ng-show="toggle == 'WIKI'">
+  <div ng-bind-html-unsafe="wiki"></div>
+</div>
       
 <div id="histo" ng-show="toggle == 'HISTOIRE'">
 

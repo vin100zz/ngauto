@@ -21,7 +21,7 @@ function AutosCtrl($scope, Auto) {
 
 // ------------------------------------------------------------------------------------------------------
 
-function MarqueCtrl($scope, $routeParams, $location, $anchorScroll, Auto) {
+function MarqueCtrl($scope, $routeParams, $location, $anchorScroll, $http, Auto) {
   $scope.marque = Auto.get({service: 'marque', id: $routeParams.marqueId}, function(marque) {
 	  $scope.histo = marque.histo;
 	  $scope.$parent.$root.pageTitle = " - " + marque.nomMarque;
@@ -46,6 +46,19 @@ function MarqueCtrl($scope, $routeParams, $location, $anchorScroll, Auto) {
       container: document.querySelector('#timeline'),
       events: events
     });
+    
+    $scope.wiki = '';
+    var url = 'https://fr.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=' + marque.nomMarque + '&callback=JSON_CALLBACK';
+    $http.jsonp(url)
+    .success(function(data){
+      var pages = data.query.pages;
+      for (var id in pages) {
+        if (pages.hasOwnProperty(id)) {
+          var page = pages[id];
+          $scope.wiki += page.extract;
+        }
+      }
+    });
   });
   
   $scope.toggle = 'MODELES';
@@ -55,6 +68,9 @@ function MarqueCtrl($scope, $routeParams, $location, $anchorScroll, Auto) {
   }
   $scope.showTimeline = function() {
     $scope.toggle = 'TIMELINE';
+  }
+  $scope.showWiki= function() {
+    $scope.toggle = 'WIKI';
   }
   $scope.showHistoire = function() {
     $scope.toggle = 'HISTOIRE';
@@ -112,48 +128,57 @@ function VersionCtrl($scope, $routeParams, Auto) {
 //------------------------------------------------------------------------------------------------------
 
 function SaisieCtrl($scope, $routeParams, Auto) {
-  $scope.saisie = Auto.get({service: 'saisie', action: $routeParams.action, objet: $routeParams.objet, id: $routeParams.id}, function(saisie) {
+  
+  var cb = function (saisie) {
     $scope.$parent.$root.pageTitle = ' - Saisie';
     $scope.objet = saisie.objet;
-		  
-		  if(saisie.action == "edit")
-			  $scope.saisie.ordre = parseInt(saisie.ordre);
-		  else 
-			  $scope.saisie.ordre = 0;
-		  
-	    $scope.modeleSorterCfg = {
-	      show: $scope.objet === 'marque',
-	      label: 'Ordre des modèles',
-	      list: $scope.saisie.modeles,
-	      idFn: function(item) {return item.idModele;},
-        labelFn: function(item) {return item.nomModele;}
+    $scope.action = saisie.action;
+      
+    if($scope.action == "edit")
+      $scope.saisie.ordre = parseInt(saisie.ordre);
+    else 
+      $scope.saisie.ordre = 0;
+    
+    $scope.modeleSorterCfg = {
+      show: $scope.objet === 'marque' && $scope.action === 'edit',
+      label: 'Ordre des modèles',
+      list: $scope.saisie.modeles,
+      idFn: function(item) {return item.idModele;},
+      labelFn: function(item) {return item.nomModele;}
+    }
+    
+    $scope.versionSorterCfg = {
+      show: $scope.objet === 'modele' && $scope.action === 'edit',
+      label: 'Ordre des versions',
+      list: $scope.saisie.versions,
+      idFn: function(item) {return item.idVersion;},
+      labelFn: function(item) {return item.nom + (item.type ? ' ' + item.type : '') + (item.anneeModele ? ' (' + item.anneeModele + ')' : '');}
+    }
+  };
+    
+  if ($routeParams.action === 'add' && $routeParams.objet === 'marque') {
+    $scope.saisie = {};
+    cb({action: $routeParams.action, objet: $routeParams.objet});
+  } else {
+    $scope.saisie = Auto.get({service: 'saisie', action: $routeParams.action, objet: $routeParams.objet, id: $routeParams.id}, cb);
+  }
+  
+  $scope.update = function() {
+    if ($scope.saisie.objet === 'marque') {
+	    $scope.saisie.modeleOrder = [];
+	    for (var i=0; i<$scope.saisie.modeles.length; ++i) {
+	      $scope.saisie.modeleOrder.push($scope.saisie.modeles[i].idModele);
 	    }
-	    
-	    $scope.versionSorterCfg = {
-        show: $scope.objet === 'modele',
-        label: 'Ordre des versions',
-        list: $scope.saisie.versions,
-        idFn: function(item) {return item.idVersion;},
-        labelFn: function(item) {return item.nom + (item.type ? ' ' + item.type : '') + (item.anneeModele ? ' (' + item.anneeModele + ')' : '');}
+	  } else if ($scope.saisie.objet === 'modele') {
+      $scope.saisie.versionOrder = [];
+      for (var i=0; i<$scope.saisie.versions.length; ++i) {
+        $scope.saisie.versionOrder.push($scope.saisie.versions[i].idVersion);
       }
+	  }
+	  Auto.save({service: 'update'}, this.saisie, function(update) {
+	    history.back();
 	  });
-	  
-	  $scope.update = function() {
-	    if ($scope.saisie.objet === 'marque') {
-  	    $scope.saisie.modeleOrder = [];
-  	    for (var i=0; i<$scope.saisie.modeles.length; ++i) {
-  	      $scope.saisie.modeleOrder.push($scope.saisie.modeles[i].idModele);
-  	    }
-  	  } else if ($scope.saisie.objet === 'modele') {
-        $scope.saisie.versionOrder = [];
-        for (var i=0; i<$scope.saisie.versions.length; ++i) {
-          $scope.saisie.versionOrder.push($scope.saisie.versions[i].idVersion);
-        }
-  	  }
-		  Auto.save({service: 'update'}, this.saisie, function(update) {
-		    history.back();
-		  });
-	  };
+  };
 }
 
 //------------------------------------------------------------------------------------------------------
