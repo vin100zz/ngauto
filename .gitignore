@@ -1,4 +1,9 @@
+.settings/
+.buildpath
+.project
+
 img/
 autos/texte/
 *.sqlite
+
 papounet.css
